@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g -shared -Wl,-soname,libKoroEngine.so -o ../bin/Debug-Linux-x86_64/libKoroEngine.so CMakeFiles/KoroEngine.dir/src/Test.cpp.o  -Wl,-rpath,"\$ORIGIN" ../bin/Debug-Linux-x86_64/libspdlogd.a 
