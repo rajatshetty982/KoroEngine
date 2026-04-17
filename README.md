@@ -1,2 +1,3 @@
 # KoroEngine
-Koro Engine is a f"rom-scratch" C++ game engine built to understand how game engines work.
+
+Koro Engine is a "from-scratch" C++ game engine built just for me to learn how game engines work.
