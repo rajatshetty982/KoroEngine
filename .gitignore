@@ -43,4 +43,19 @@
 # personal files
 MAINTANACE.md
 
+# --- Project Specifics ---
 build/
+
+# In-source build files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+.cache/
+
+# Neovim specific, ignore swap/undo files
+*.swp
+*.swo
+undo/
