@@ -1,0 +1,11 @@
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/CMakeFiles/edit_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/CMakeFiles/rebuild_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog/CMakeFiles/spdlog.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog/CMakeFiles/edit_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog/CMakeFiles/rebuild_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/KoroEngine/CMakeFiles/KoroEngine.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/KoroEngine/CMakeFiles/edit_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/KoroEngine/CMakeFiles/rebuild_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/Sandbox/CMakeFiles/Sandbox.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/Sandbox/CMakeFiles/edit_cache.dir
+/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/Sandbox/CMakeFiles/rebuild_cache.dir

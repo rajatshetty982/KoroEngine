@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/spdlog.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/spdlog.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/spdlog.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/stdout_sinks.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/stdout_sinks.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/color_sinks.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/color_sinks.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/color_sinks.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/file_sinks.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/file_sinks.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/file_sinks.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/async.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/async.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/async.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/cfg.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/cfg.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/cfg.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/libs/spdlog",
+  "command": "/usr/bin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=c++17 -o CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/bundled_fmtlib_format.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/src/bundled_fmtlib_format.cpp",
+  "output": "libs/spdlog/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/KoroEngine",
+  "command": "/usr/bin/c++ -DKORO_BUILD_DLL -DKoroEngine_EXPORTS -DSPDLOG_COMPILED_LIB -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/KoroEngine/src -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/libs/spdlog/include -g -std=gnu++17 -fPIC -o CMakeFiles/KoroEngine.dir/src/Test.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/KoroEngine/src/Test.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/KoroEngine/src/Test.cpp",
+  "output": "KoroEngine/CMakeFiles/KoroEngine.dir/src/Test.cpp.o"
+},
+{
+  "directory": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/Sandbox",
+  "command": "/usr/bin/c++  -I/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/KoroEngine/src -g -std=gnu++17 -o CMakeFiles/Sandbox.dir/src/Application.cpp.o -c /mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/Sandbox/src/Application.cpp",
+  "file": "/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/Sandbox/src/Application.cpp",
+  "output": "Sandbox/CMakeFiles/Sandbox.dir/src/Application.cpp.o"
+}
+]

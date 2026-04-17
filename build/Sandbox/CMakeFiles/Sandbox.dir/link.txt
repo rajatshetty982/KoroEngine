@@ -1,0 +1,1 @@
+/usr/bin/c++ -g  -Wl,-rpath,'$ORIGIN' CMakeFiles/Sandbox.dir/src/Application.cpp.o -o ../bin/Debug-Linux-x86_64/Sandbox  -Wl,-rpath,"\$ORIGIN:/mnt/study_work/comp/core_projects/engine_stuff/KoroEngine/build/bin/Debug-Linux-x86_64" ../bin/Debug-Linux-x86_64/libKoroEngine.so 
