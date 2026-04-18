@@ -3,10 +3,10 @@ architecture("x64")
 configurations({ "Debug", "Release", "Dist" })
 startproject("Sandbox")
 
--- Define base output path
+-- Output directory pattern
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- Global platform detection
+-- OS-Specific Logic
 filter("system:windows")
 system("windows")
 defines({ "KORO_PLATFORM_WINDOWS" })
@@ -14,7 +14,15 @@ defines({ "KORO_PLATFORM_WINDOWS" })
 filter("system:linux")
 system("linux")
 defines({ "KORO_PLATFORM_LINUX" })
+-- Ensures the Sandbox finds the .so file in its own directory
 linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
+
+-- not done anything for the biten fruit os
+filter("system:macosx")
+system("macosx")
+defines({ "KORO_PLATFORM_MACOS" })
+-- rpath so the executable looks for dylibs relative to itself
+linkoptions({ "-Wl,-rpath,@loader_path" })
 
 -- PROJECT: KoroEngine
 project("KoroEngine")
@@ -27,12 +35,19 @@ staticruntime("off")
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+-- recursively find files in subfolders
 files({ "KoroEngine/src/**.h", "KoroEngine/src/**.cpp" })
-includedirs({ "KoroEngine/src", "libs/spdlog/include" })
+
+-- Include Path: We point to 'src' so that
+-- #include "KoroEngine/Core/Core.h" works correctly.
+includedirs({
+	"KoroEngine/src",
+	"libs/spdlog/include",
+	-- NOTE: add vendor specific libs here
+})
+
 defines({ "KORO_BUILD_DLL" })
 
--- UNIVERSAL AUTOMATION:
--- This works on Windows (.dll) and Linux (.so)
 postbuildcommands({
 	"{MKDIR} ../../bin/" .. outputdir .. "/Sandbox/",
 	"{COPY} %{cfg.buildtarget.relpath} ../../bin/" .. outputdir .. "/Sandbox/",
@@ -50,6 +65,11 @@ targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
 files({ "Sandbox/src/**.h", "Sandbox/src/**.cpp" })
-includedirs({ "KoroEngine/src", "libs/spdlog/include" })
+
+-- Sync Sandbox: Must match Engine's include root
+includedirs({
+	"KoroEngine/src",
+	"libs/spdlog/include",
+})
 
 links({ "KoroEngine" })

@@ -1,7 +1,13 @@
-#include <Test.h>
+#include <KoroEngine.h>
 
-int main()
+class Sandbox : public Koro::Application
 {
-	Koro::Print();
-	return 0;
+public:
+	Sandbox(){}
+	~Sandbox(){}
+};
+
+Koro::Application* Koro::CreateApplication()
+{
+	return new Sandbox;
 }
