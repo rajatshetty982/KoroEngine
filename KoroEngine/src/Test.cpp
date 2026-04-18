@@ -1,11 +1,12 @@
 #include "Test.h"
 #include <cstdio>
+#include <iostream>
 
 namespace Koro {
 
 void Print()
 {
-	printf("Welcome to Koro Engine!\n");
+	std::cout << "Welcome to Koro Engine!\n";
 }
 
 }
