@@ -20,3 +20,4 @@ void Log::Init()
 
 
 } // Koro
+

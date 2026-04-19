@@ -42,7 +42,7 @@ files({ "KoroEngine/src/**.h", "KoroEngine/src/**.cpp" })
 -- #include "KoroEngine/Core/Core.h" works correctly.
 includedirs({
 	"KoroEngine/src",
-	"libs/spdlog/include",
+	"vendor/spdlog/include",
 	-- NOTE: add vendor specific libs here
 })
 
@@ -69,7 +69,7 @@ files({ "Sandbox/src/**.h", "Sandbox/src/**.cpp" })
 -- Sync Sandbox: Must match Engine's include root
 includedirs({
 	"KoroEngine/src",
-	"libs/spdlog/include",
+	"vendor/spdlog/include",
 })
 
 links({ "KoroEngine" })

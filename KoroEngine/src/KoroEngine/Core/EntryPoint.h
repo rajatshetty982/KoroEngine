@@ -1,4 +1,6 @@
 #pragma once
+// #include "Application.h"
+// #include "Log.h"
 
 #ifdef KORO_PLATFORM_LINUX
 
@@ -8,8 +10,8 @@ int main(int argc, char** argv)
 {
 
 	Koro::Log::Init();
-	Koro::Log::GetCoreLogger()->warn("Initialised Engine!");
-	Koro::Log::GetClientLogger()->critical("Initialised client app!");
+	KORO_ENG_INFO("Initialised engine! info");
+	KORO_INFO("Initialised client app!");
 
 
 	auto app = Koro::CreateApplication();
