@@ -1,6 +1,4 @@
 #pragma once
-// #include "Application.h"
-// #include "Log.h"
 
 #ifdef KORO_PLATFORM_LINUX
 

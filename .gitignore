@@ -71,4 +71,7 @@ undo/
 .DS_Store
 Thumbs.db
 
+# unfinished build script
+GenerateProjects.py
+
 #MAINTENANCE.md

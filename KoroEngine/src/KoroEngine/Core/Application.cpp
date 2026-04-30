@@ -1,5 +1,7 @@
 #include "Application.h"
-#include <iostream>
+
+#include "KoroEngine/Events/ApplicationEvent.h"
+#include "KoroEngine/Core/Log.h"
 
 namespace Koro {
 
@@ -15,12 +17,9 @@ Application::~Application()
 
 void Application::Run()
 {
-
-	std::cout << "Starting the apppp";
-	while (1)
-	{
-
-	}
+	WindowResizeEvent e(1200, 720);
+	KORO_ENG_INFO(e);
+	while (1);
 	return;
 }
 

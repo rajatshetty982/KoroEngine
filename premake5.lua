@@ -35,8 +35,14 @@ staticruntime("off")
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+pchheader("koropch.h")
+pchsource("KoroEngine/src/koropch.cpp") -- a windows requirement
+
 -- recursively find files in subfolders
-files({ "KoroEngine/src/**.h", "KoroEngine/src/**.cpp" })
+files({
+	"%{prj.name}/src/**.h",
+	"%{prj.name}/src/**.cpp",
+})
 
 -- Include Path: We point to 'src' so that
 -- #include "KoroEngine/Core/Core.h" works correctly.
