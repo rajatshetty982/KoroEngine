@@ -1,30 +1,18 @@
+-- KoroEngine - Multi-platform Build Configuration
+
 workspace("KoroEngine")
 architecture("x64")
 configurations({ "Debug", "Release", "Dist" })
 startproject("Sandbox")
 
--- Output directory pattern
+-- Format: Debug-linux-x86_64
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- OS-Specific Logic
-filter("system:windows")
-system("windows")
-defines({ "KORO_PLATFORM_WINDOWS" })
-
-filter("system:linux")
-system("linux")
-defines({ "KORO_PLATFORM_LINUX" })
--- Ensures the Sandbox finds the .so file in its own directory
-linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
-
--- not done anything for the biten fruit os
-filter("system:macosx")
-system("macosx")
-defines({ "KORO_PLATFORM_MACOS" })
--- rpath so the executable looks for dylibs relative to itself
-linkoptions({ "-Wl,-rpath,@loader_path" })
-
--- PROJECT: KoroEngine
+-- external dependency projects
+include("vendor/glfw")
+-------------------------------------------------------------------------------
+-- PROJECT: KoroEngine (Core Shared Library)
+-------------------------------------------------------------------------------
 project("KoroEngine")
 location("KoroEngine")
 kind("SharedLib")
@@ -35,31 +23,56 @@ staticruntime("off")
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+-- Precompiled Header Configuration
 pchheader("koropch.h")
-pchsource("KoroEngine/src/koropch.cpp") -- a windows requirement
+pchsource("KoroEngine/src/koropch.cpp")
 
--- recursively find files in subfolders
 files({
 	"%{prj.name}/src/**.h",
 	"%{prj.name}/src/**.cpp",
 })
 
--- Include Path: We point to 'src' so that
--- #include "KoroEngine/Core/Core.h" works correctly.
 includedirs({
-	"KoroEngine/src",
+	"%{prj.name}/src",
 	"vendor/spdlog/include",
-	-- NOTE: add vendor specific libs here
+	"vendor/glfw/include",
 })
 
-defines({ "KORO_BUILD_DLL" })
+defines({
+	"KORO_BUILD_DLL",
+})
 
+-- Engine Dependencies
+links({ "GLFW" })
+
+-- Platform-Specific Configuration
+filter("system:windows")
+system("windows")
+defines({ "KORO_PLATFORM_WINDOWS" })
+-- Windows system libs required for graphics/windowing
+links({ "gdi32", "user32", "shell32" })
+
+filter("system:linux")
+system("linux")
+defines({ "KORO_PLATFORM_LINUX" })
+-- Standard Linux development libraries
+-- core display drivers
+links({ "GL", "X11", "pthread", "dl" })
+
+filter("system:macosx")
+system("macosx")
+defines({ "KORO_PLATFORM_MACOS" })
+
+-- for easy execution in dev
+filter("configurations:not Dist")
 postbuildcommands({
-	"{MKDIR} ../../bin/" .. outputdir .. "/Sandbox/",
-	"{COPY} %{cfg.buildtarget.relpath} ../../bin/" .. outputdir .. "/Sandbox/",
+	"{MKDIR} ../bin/" .. outputdir .. "/Sandbox/",
+	"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox/",
 })
 
--- PROJECT: Sandbox
+-------------------------------------------------------------------------------
+-- PROJECT: Sandbox (Client Application)
+-------------------------------------------------------------------------------
 project("Sandbox")
 location("Sandbox")
 kind("ConsoleApp")
@@ -70,12 +83,32 @@ staticruntime("off")
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
-files({ "Sandbox/src/**.h", "Sandbox/src/**.cpp" })
+files({
+	"%{prj.name}/src/**.h",
+	"%{prj.name}/src/**.cpp",
+})
 
--- Sync Sandbox: Must match Engine's include root
 includedirs({
 	"KoroEngine/src",
 	"vendor/spdlog/include",
+	"vendor/glfw/include",
 })
 
+-- Link against the Engine (DLL/SO dependency)
 links({ "KoroEngine" })
+
+filter("system:windows")
+system("windows")
+defines({ "KORO_PLATFORM_WINDOWS" })
+
+filter("system:linux")
+system("linux")
+defines({ "KORO_PLATFORM_LINUX" })
+-- Ensure the executable looks for KoroEngine.so in its own directory
+linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
+
+filter("system:macosx")
+system("macosx")
+defines({ "KORO_PLATFORM_MACOS" })
+-- Look for dylibs relative to executable path
+linkoptions({ "-Wl,-rpath,@loader_path" })

@@ -11,7 +11,7 @@
 #include <functional>
 #include <utility>
 #include <algorithm>
-
+#include <iterator>
 
 
 #ifdef KORO_PLATFORM_WINDOWS

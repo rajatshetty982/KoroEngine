@@ -1,51 +1,34 @@
 #pragma once
 
+#include "koropch.h"
 #include "KoroEngine/Core/Platform.h"
 #include "KoroEngine/Core/Core.h"
-#include <functional>
+#include "KoroEngine/Events/EventType.h"
+#include "KoroEngine/Events/EventBuffer.h"
 
 #include <spdlog/fmt/ostr.h>
 // Events are blocking rn, it should be buffered and then dequed later by something (Pass or event bus)
 
 namespace Koro {
 
+class EventBuffer;
+
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
 	virtual EventType GetEventType() const override { return GetStaticType(); }\
-	virtual const char* GetName() const override { return #type; }
+	virtual const char* GetName() const override { return #type; }\
+	virtual void PushToBuffer(EventBuffer& buffer) const override { buffer.PushDerivedEvent(*this); }
 
-enum class EventType
-{
-	NoEvent = 0,
-	// mouse events
-
-	MouseButtonPress, MouseButtonRelease, MouseMove, MouseScroll,
-
-	// app events
-	WindowFocus, WindowLostFocus, WindowResize, WindowClose,
-
-	// other ap side events
-	ATick, AUpdate, ARender,
-
-	// keyboard events
-	KeyPress, KeyRelease,
-};
-
-enum EventCategory
-{
-	EventCategoryMouse = (1),
-	EventCategoryApp = (1 << 1),
-	EventCategoryKeyboard = (1 << 2),
-	EventCategoryMouseButton = (1 << 3),
-	EventCategoryInput = (1 << 4),
-};
 
 class KORO_API Event
 {
 	friend class EventDispactcher;
 
 public:
+	virtual ~Event() = default;
+	virtual void PushToBuffer(EventBuffer& eventBuffer) const = 0;
+
 	virtual EventType GetEventType() const = 0;
 	virtual int GetCategoryFlags() const = 0;
 	virtual const char* GetName() const = 0;
@@ -77,6 +60,8 @@ public:
 		{
 			m_Event.m_Handled = func(*(T*)&m_Event);
 		}
+
+		return m_Event.m_Handled;
 	}
 
 private:
