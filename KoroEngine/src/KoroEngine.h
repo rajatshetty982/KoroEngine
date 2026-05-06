@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cstdio>
 
 #include "KoroEngine/Core/Application.h"
 #include "KoroEngine/Core/Core.h"
+#include "KoroEngine/Core/Log.h"
 
 
 //------ Engine Entry point for client -------------

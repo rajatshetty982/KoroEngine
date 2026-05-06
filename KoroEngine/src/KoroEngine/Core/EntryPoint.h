@@ -6,7 +6,11 @@ extern Koro::Application* Koro::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	printf("\n\nStarting Koro Engine!\n\n");
+
+	Koro::Log::Init();
+	KORO_ENG_INFO("Initialised engine! info");
+	KORO_INFO("Initialised client app!");
+
 
 	auto app = Koro::CreateApplication();
 	app->Run();
