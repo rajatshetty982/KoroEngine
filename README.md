@@ -98,20 +98,6 @@ This enables proper IntelliSense for:
 - Neovim (clangd)
 - VS Code (C/C++ extension)
 
-## Project Structure
-
-``` bash
-KoroEngine/
-├── KoroEngine/        # Engine source (shared library)
-├── Sandbox/           # Client application
-├── vendor/            # Third-party dependencies
-├── bin/               # Output binaries
-├── bin-int/           # Intermediate build files
-├── premake5.lua       # Root build configuration
-├── GenerateProject.py
-├── Build.py
-```
-
 ## Intent
 
 - Engine architecture decisions
