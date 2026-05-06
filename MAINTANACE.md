@@ -42,7 +42,7 @@ python GenerateProject.py && python Build.py
 
 ---
 
-## 2. Manual Build (Fallback)
+## 2. Manual Build
 
 ### Linux
 
@@ -145,22 +145,23 @@ Premake must rescan file lists for changes to take effect.
 ## 7. Adding Dependencies
 
 1. Add submodule:
-  
+
 ```bash
-    git submodule add <url> vendor/<name>
-    ```
+git submodule add <url> vendor/<name>
+```
 
 2. Update `premake5.lua`:
-    Include directory:
-    ```lua
-        includedirs { "vendor/<name>/include" }
-    ```
+Include directory:
 
-    Link library (if required):
+```lua
+includedirs { "vendor/<name>/include" }
+```
 
-    ```lua
-    links { "<name>" }
-    ```
+Link library (if required):
+
+```lua
+links { "<name>" }
+```
 
 3. Regenerate project files.
 
