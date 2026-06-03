@@ -6,6 +6,7 @@ import sys
 def run_command(command, cwd=None):
     """Executes a system command and returns success status."""
     try:
+        print("run_command: Running this command: " + command);
         subprocess.check_call(command, shell=True, cwd=cwd)
         return True
     except subprocess.CalledProcessError as e:
@@ -72,10 +73,14 @@ def main():
         action = "vs2022"
     elif system == "Darwin":
         action = "xcode4"
-    else:
+    elif system == "Linux":
         action = "gmake"
+    else:
+        print("Not a supported OS")
+        print("Aborting!")
+        return
 
-    print(f"Generating {action} files using {premake_path}...")
+    print(f"Generating {action} files using {premake_path}")
 
     # Generate projects
     if run_command(f"{premake_path} {action}"):
@@ -83,7 +88,7 @@ def main():
 
         # Linux-specific: Automatically run Bear if desired
         if system == "Linux":
-            print("Note: If you're using nvim and not using build.py, run a command equivalent of 'bear -- make' to update/create LSP database (compile_commands.json)")
+            print("\n\nNote: If you're using nvim and not using build.py, run a command equivalent of 'bear -- make' to update/create LSP database (compile_commands.json)")
     else:
         print("\nError: Project generation failed.")
         sys.exit(1)

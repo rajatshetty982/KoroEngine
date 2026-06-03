@@ -1,9 +1,9 @@
 #include "EventBuffer.h"
+#include "Event.h"
 
 namespace Koro {
-class Event;
 
-void ProcessBuffer(EventBuffer& buffer)
+void ProcessBuffer(EventBuffer& buffer, const std::function<void(Event&)>& callback)
 {
 	std::byte* current = buffer.GetStart();
 	while (current < buffer.Gethead())
@@ -13,12 +13,11 @@ void ProcessBuffer(EventBuffer& buffer)
 		// get the event in front of the header, and cast it to event* which our onevent needs and call it
 		Event* event = reinterpret_cast<Event*>(current + sizeof(EventHeader));
 
-		// OnEvent(*event); // FIXME: uncomment once we implement this in the event.h
-		//
+		callback(*event);
+
 		// move the current forward by eventheader size + the size of the current event, that we have the info inside the event header
 		current += eventHeader->TotalStep;
 
 	}
 }
-
 }

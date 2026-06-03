@@ -1,42 +1,60 @@
 # just a dumb build script for me, because I don't want to remember what I used for this project(I am experimenting heavily on every other build system, still in my early learning phase)
 
-import platform
-import sys
-import subprocess
 import multiprocessing
+import platform
+import shutil
+import subprocess
+import sys
+
 
 def get_cpu_count():
     return multiprocessing.cpu_count()
 
+
 def build():
     host_os = platform.system()
-    config = "debug" # TODO: extend later take sys.argv[1]
+    config = "debug"
 
     if host_os == "Linux":
-        # Check for bear to maintain the LSP database
-        has_bear = subprocess.run("command -v bear", shell=True, capture_output=True).returncode == 0
+        has_bear = shutil.which("bear") is not None
 
-        make_cmd = f"make -j{get_cpu_count()} config={config}"
+        make_cmd = [
+            "make",
+            f"-j{get_cpu_count()}",
+            f"config={config}"
+        ]
 
-        full_cmd = f"bear -- {make_cmd}" if has_bear else make_cmd
+        cmd = make_cmd
 
-        print(f"Executing: {full_cmd}")
-        subprocess.call(full_cmd, shell=True)
+        if has_bear:
+            cmd = [
+                "bear",
+                "--append",
+                "--output",
+                "compile_commands.json",
+                "--"
+            ] + make_cmd
 
-        exit_code = subprocess.call(full_cmd, shell=True)
+        print(f"Executing: {' '.join(cmd)}")
 
-        if exit_code != 0:
-            print(f"\n[!] BUILD FAILED: 'make' exited with code {exit_code}")
-            # Signal to the OS/Terminal that the process failed
-            sys.exit(exit_code)
+        try:
+            subprocess.run(cmd, check=True)
+
+        except subprocess.CalledProcessError as e:
+            print(f"\n[!] BUILD FAILED: exited with code {e.returncode}")
+            sys.exit(e.returncode)
 
         print("\n[+] Build Successful.")
 
     elif host_os == "Windows":
         print("Use MSBuild or open the generated Visual Studio solution.")
 
-    elif host_os == "Darwim":
-        print("I absolutely have no idea how you'll do it!")
+    elif host_os == "Darwin":
+        print("No macOS build path yet.")
+
+    else:
+        print(f"Unsupported platform: {host_os}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

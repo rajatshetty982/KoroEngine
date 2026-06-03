@@ -10,6 +10,14 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- external dependency projects
 include("vendor/glfw")
+include("vendor/Glad")
+
+-- Linux .so require static dependencies (GLFW/Glad) to be built with -fPIC
+-- Force Position Independent Code for dynamic linking
+filter("system:linux")
+pic("On")
+filter({})
+
 -------------------------------------------------------------------------------
 -- PROJECT: KoroEngine (Core Shared Library)
 -------------------------------------------------------------------------------
@@ -36,14 +44,17 @@ includedirs({
 	"%{prj.name}/src",
 	"vendor/spdlog/include",
 	"vendor/glfw/include",
+	"vendor/Glad/include",
 })
 
 defines({
 	"KORO_BUILD_DLL",
+	"GLFW_INCLUDE_NONE",
 })
 
 -- Engine Dependencies
 links({ "GLFW" })
+links({ "Glad" })
 
 -- Platform-Specific Configuration
 filter("system:windows")
@@ -92,6 +103,7 @@ includedirs({
 	"KoroEngine/src",
 	"vendor/spdlog/include",
 	"vendor/glfw/include",
+	"vendor/Glad/include",
 })
 
 -- Link against the Engine (DLL/SO dependency)
