@@ -1,6 +1,7 @@
 #pragma once
 
 #include "koropch.h"
+
 #include "KoroEngine/Core/Platform.h"
 #include "KoroEngine/Core/Core.h"
 #include "KoroEngine/Events/EventType.h"
@@ -23,7 +24,7 @@ class EventBuffer;
 
 class KORO_API Event
 {
-	friend class EventDispactcher;
+	friend class EventDispatcher;
 
 public:
 	virtual ~Event() = default;
@@ -43,18 +44,17 @@ protected:
 	bool m_Handled = false;
 };
 
-class EventDispactcher
+class EventDispatcher
 {
 	template<typename T>
 	using EventFn = std::function<bool(T&)>;
 
 public:
-	EventDispactcher(Event& e)
+	EventDispatcher(Event& e)
 	: m_Event(e) {}
 
 	template<typename T>
-	// bool Dispatch(EventFn<T> func)
-	bool Dispatch(std::function<bool(T&)> func)
+	bool Dispatch(EventFn<T> func) // FIX: not sure if it has to be T& or just T
 	{
 		if (m_Event.GetEventType() == T::GetStaticType())
 		{

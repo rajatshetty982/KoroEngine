@@ -1,9 +1,9 @@
 #pragma once
 
 #include "koropch.h"
-#include "KoroEngine/Core/Log.h"
+
 #include "KoroEngine/Events/EventType.h"
-#include <string>
+#include "KoroEngine/Core/Log.h"
 
 
 namespace Koro {
@@ -51,9 +51,7 @@ public:
 		if (m_Head + totalSize > m_BufferEnd)
 		{
 			// NOTE: We will make this a dynamic arena allocator later, returning right now, to get to the next part of the engine quickly for now
-			// TODO: write this completely
-			//
-			 // KORO_ENG_CRITICAL("EventBuffer buffer full. Cant take in the new event type: ",std::to_string((long)T::GetStaticType()));
+			KORO_ENG_CRITICAL("EventBuffer buffer full. Cant take in the new event type: {0}", (char*)T::GetStaticType());
 			return;
 		}
 
@@ -67,7 +65,7 @@ public:
 		void* paylodPos = m_Head + sizeof(EventHeader);
 		new (paylodPos) T(std::forward<Args>(args)...); // basically: create a T type obj at payloadPos with the passed args
 
-		m_Head += totalSize; // move the head pointer ahead by byt size of eventheader and T
+		m_Head += totalSize; // move the head pointer ahead by byte size of eventheader and T
 
 	}
 
@@ -104,6 +102,7 @@ private:
    *  @return void
    *  *
    */
-void ProcessBuffer(EventBuffer& buffer);
+class Event;
+void ProcessBuffer(EventBuffer& buffer, const std::function<void(Event&)>& callback);
 
 }

@@ -1,0 +1,40 @@
+#pragma once
+
+#include "koropch.h"
+
+#include "Platform.h"
+#include "KoroEngine/Events/Event.h"
+
+namespace Koro {
+
+struct WindowData
+{
+	std::string Title;
+	unsigned int Width;
+	unsigned int Height;
+
+	WindowData(const std::string& title = "Koro Engine",
+			 unsigned int width = 1280,
+			 unsigned int height = 720): Title(title), Width(width), Height(height) {}
+
+};
+
+class KORO_API IWindow
+{
+
+public:
+	using EventCallbackFn = std::function<void(Event&)>;
+
+	virtual ~IWindow() {}
+
+	virtual void OnUpdate() = 0;
+	virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+	virtual void SetVSync(bool enabled) = 0;
+	virtual bool IsVSync() const = 0;
+
+	virtual uint32_t GetWidth() const = 0;
+	virtual uint32_t GetHeight() const = 0;
+
+	static IWindow* Make(const WindowData& props = WindowData());
+};
+}

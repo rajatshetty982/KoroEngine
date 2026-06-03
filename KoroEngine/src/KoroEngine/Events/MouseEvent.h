@@ -1,7 +1,9 @@
 #pragma once
 
 #include "koropch.h"
+
 #include "Event.h"
+#include <cmath>
 
 namespace Koro
 {
@@ -31,7 +33,7 @@ private:
 class KORO_API MouseScrollEvent : public Event
 {
 public: 
-	MouseScrollEvent(float offsetX, float offsetY)
+	MouseScrollEvent(double offsetX, double offsetY)
 	: m_OffsetX(offsetX), m_OffsetY(offsetY) {}
 
 	inline float GetXOffset() const { return m_OffsetX; }
@@ -49,7 +51,7 @@ public:
 
 
 private:
-	float m_OffsetX, m_OffsetY;
+	double m_OffsetX, m_OffsetY;
 
 };
 

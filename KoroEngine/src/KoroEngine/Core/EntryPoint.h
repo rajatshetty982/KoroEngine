@@ -2,7 +2,7 @@
 
 #ifdef KORO_PLATFORM_LINUX
 
-extern Koro::Application* Koro::CreateApplication();
+// extern Koro::Application* Koro::CreateApplication();
 
 int main(int argc, char** argv)
 {
