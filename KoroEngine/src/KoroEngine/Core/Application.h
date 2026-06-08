@@ -3,9 +3,11 @@
 #include "koropch.h"
 
 #include "Platform.h"
-#include "KoroEngine/Events/ApplicationEvent.h"
 #include "Window.h"
+#include "LayerStack.h"
+#include "Layer.h"
 #include "KoroEngine/Events/EventBuffer.h"
+#include "KoroEngine/Events/ApplicationEvent.h"
 
 namespace Koro {
 
@@ -15,20 +17,23 @@ public:
 	Application();
 	virtual ~Application();
 
-public:
 	void Run();
 	void OnEvent(Event&);
-
-	bool OnWindowClose(WindowCloseEvent& e);
 	void UpdateEventPipeline(Event& e);
 
-private:
-	bool m_Running = true;
+	void PushLayer(Layer* layer);
+	void PushOverlay(Layer* overlay);
 
+private:
+	bool OnWindowClose(WindowCloseEvent& e);
+
+	bool m_Running = true;
 	std::unique_ptr<IWindow> m_Window;
 
 	std::shared_ptr<EventBuffer> m_ReceiveBuffer;
 	std::shared_ptr<EventBuffer> m_ProcessBuffer;
+
+	LayerStack m_LayerStack;
 }; // Application
 
 Application* CreateApplication();

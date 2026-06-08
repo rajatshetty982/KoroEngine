@@ -38,6 +38,7 @@ public:
 	{
 		return category & GetCategoryFlags();
 	}
+	bool Handled() const { return m_Handled; }
 
 
 protected:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "KoroEngine/Core/Log.h"
 #ifdef KORO_PLATFORM_LINUX
 
 // extern Koro::Application* Koro::CreateApplication();
@@ -10,6 +11,7 @@ int main(int argc, char** argv)
 	Koro::Log::Init();
 	KORO_ENG_INFO("Initialised engine! info");
 	KORO_INFO("Initialised client app!");
+	KORO_INFO("Build: "); // FIX: Add which build
 
 
 	auto app = Koro::CreateApplication();
