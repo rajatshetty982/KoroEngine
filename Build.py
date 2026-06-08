@@ -21,7 +21,8 @@ def build():
         make_cmd = [
             "make",
             f"-j{get_cpu_count()}",
-            f"config={config}"
+            f"config={config}",
+            f"verbose=1"
         ]
 
         cmd = make_cmd

@@ -2,7 +2,7 @@
 
 workspace("KoroEngine")
 architecture("x64")
-configurations({ "Debug", "Release", "Dist" })
+configurations({ "debug", "release", "dist" })
 startproject("Sandbox")
 
 -- Format: Debug-linux-x86_64
@@ -12,15 +12,39 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 include("vendor/glfw")
 include("vendor/Glad")
 
--- Linux .so require static dependencies (GLFW/Glad) to be built with -fPIC
--- Force Position Independent Code for dynamic linking
-filter("system:linux")
-pic("On")
-filter({})
-
 -------------------------------------------------------------------------------
 -- PROJECT: KoroEngine (Core Shared Library)
 -------------------------------------------------------------------------------
+
+filter("configurations:debug")
+defines({ "KORO_DEBUG" }) -- Note the single quotes wrapping the double quotes!
+symbols("On")
+
+filter("configurations:release")
+defines({ "KORO_RELEASE" })
+optimize("On")
+
+filter("configurations:dist")
+defines({ "KORO_DIST" })
+optimize("Full")
+
+filter({ "system:macosx" })
+buildoptions({
+	"-Wall",
+	"-Wextra",
+	"-Wpedantic",
+})
+
+filter({ "system:linux" })
+buildoptions({
+	"-Wall",
+	"-Wextra",
+	"-Wpedantic",
+})
+
+filter({})
+------
+---
 project("KoroEngine")
 location("KoroEngine")
 kind("SharedLib")
@@ -118,9 +142,40 @@ system("linux")
 defines({ "KORO_PLATFORM_LINUX" })
 -- Ensure the executable looks for KoroEngine.so in its own directory
 linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
+-- Linux .so require static dependencies (GLFW/Glad) to be built with -fPIC
+-- Force Position Independent Code for dynamic linking
+pic("On")
 
 filter("system:macosx")
 system("macosx")
 defines({ "KORO_PLATFORM_MACOS" })
 -- Look for dylibs relative to executable path
 linkoptions({ "-Wl,-rpath,@loader_path" })
+
+filter("configurations:debug")
+defines({ "KORO_DEBUG" }) -- Note the single quotes wrapping the double quotes!
+symbols("On")
+
+filter("configurations:release")
+defines({ "KORO_RELEASE" })
+optimize("On")
+
+filter("configurations:dist")
+defines({ "KORO_DIST" })
+optimize("Full")
+
+filter({ "system:macosx" })
+buildoptions({
+	"-Wall",
+	"-Wextra",
+	"-Wpedantic",
+})
+
+filter({ "system:linux" })
+buildoptions({
+	"-Wall",
+	"-Wextra",
+	"-Wpedantic",
+})
+
+filter({})
