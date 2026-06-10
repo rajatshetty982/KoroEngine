@@ -1,7 +1,7 @@
 project("Glad")
 kind("StaticLib")
 language("C")
-staticruntime("on")
+staticruntime("On")
 
 targetdir("../../bin/" .. outputdir .. "/%{prj.name}")
 objdir("../../bin-int/" .. outputdir .. "/%{prj.name}")
@@ -24,4 +24,10 @@ pic("On")
 
 filter("system:macosx")
 
-filter({})
+filter("configurations:Debug")
+runtime("Debug")
+symbols("On")
+
+filter("configurations:Release")
+runtime("Release")
+optimize("Full")

@@ -14,6 +14,7 @@
 // --------------- helpers end --------------
 
 // Platform Detection and API Export/Import
+#if KORO_DYNAMIC_LINK
 #ifdef KORO_PLATFORM_WINDOWS
     #ifdef KORO_BUILD_DLL
         #define KORO_API __declspec(dllexport)
@@ -26,6 +27,9 @@
     #define KORO_API __attribute__((visibility("default")))
 #else
     #error "Unsupported platform!"
+#endif
+#else
+	#define KORO_API
 #endif
 
 // Debug Break Logic

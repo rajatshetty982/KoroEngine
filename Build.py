@@ -13,7 +13,7 @@ def get_cpu_count():
 
 def build():
     host_os = platform.system()
-    config = "debug"
+    config = "Debug"
 
     if host_os == "Linux":
         has_bear = shutil.which("bear") is not None
@@ -22,7 +22,7 @@ def build():
             "make",
             f"-j{get_cpu_count()}",
             f"config={config}",
-            f"verbose=1"
+            # f"verbose=1"
         ]
 
         cmd = make_cmd

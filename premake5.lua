@@ -2,7 +2,7 @@
 
 workspace("KoroEngine")
 architecture("x64")
-configurations({ "debug", "release", "dist" })
+configurations({ "Debug", "Release", "Dist" })
 startproject("Sandbox")
 
 -- Format: Debug-linux-x86_64
@@ -11,21 +11,33 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- external dependency projects
 include("vendor/glfw")
 include("vendor/Glad")
+include("vendor/imgui")
 
--------------------------------------------------------------------------------
--- PROJECT: KoroEngine (Core Shared Library)
--------------------------------------------------------------------------------
+KoroDependencies = {
+	"GLFW",
+	"Glad",
+	"imgui",
+}
+LinuxSystemLibraries = {
+	"GL",
+	"X11",
+	"pthread",
+	"dl",
+}
 
-filter("configurations:debug")
-defines({ "KORO_DEBUG" }) -- Note the single quotes wrapping the double quotes!
+filter("configurations:Debug")
+defines({ "KORO_DEBUG" })
+runtime("Debug")
 symbols("On")
 
-filter("configurations:release")
+filter("configurations:Release")
 defines({ "KORO_RELEASE" })
+runtime("Release")
 optimize("On")
 
-filter("configurations:dist")
+filter("configurations:Dist")
 defines({ "KORO_DIST" })
+runtime("Release")
 optimize("Full")
 
 filter({ "system:macosx" })
@@ -43,14 +55,18 @@ buildoptions({
 })
 
 filter({})
+
+-------------------------------------------------------------------------------
+-- PROJECT: KoroEngine (Core Shared Library)
+-------------------------------------------------------------------------------
 ------
 ---
 project("KoroEngine")
 location("KoroEngine")
-kind("SharedLib")
+kind("StaticLib")
 language("C++")
 cppdialect("C++17")
-staticruntime("off")
+staticruntime("On")
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -69,16 +85,15 @@ includedirs({
 	"vendor/spdlog/include",
 	"vendor/glfw/include",
 	"vendor/Glad/include",
+	"vendor/imgui/include",
 })
 
 defines({
-	"KORO_BUILD_DLL",
 	"GLFW_INCLUDE_NONE",
 })
 
 -- Engine Dependencies
-links({ "GLFW" })
-links({ "Glad" })
+links(KoroDependencies)
 
 -- Platform-Specific Configuration
 filter("system:windows")
@@ -92,18 +107,18 @@ system("linux")
 defines({ "KORO_PLATFORM_LINUX" })
 -- Standard Linux development libraries
 -- core display drivers
-links({ "GL", "X11", "pthread", "dl" })
+links(LinuxSystemLibraries)
 
 filter("system:macosx")
 system("macosx")
 defines({ "KORO_PLATFORM_MACOS" })
 
--- for easy execution in dev
-filter("configurations:not Dist")
-postbuildcommands({
-	"{MKDIR} ../bin/" .. outputdir .. "/Sandbox/",
-	"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox/",
-})
+-- -- for easy execution in dev NOTE: Not needed as we seitched from shared object to static
+-- filter("configurations:not Dist")
+-- postbuildcommands({
+-- 	"{MKDIR} ../bin/" .. outputdir .. "/Sandbox/",
+-- 	"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox/",
+-- })
 
 -------------------------------------------------------------------------------
 -- PROJECT: Sandbox (Client Application)
@@ -113,7 +128,7 @@ location("Sandbox")
 kind("ConsoleApp")
 language("C++")
 cppdialect("C++17")
-staticruntime("off")
+staticruntime("On")
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -128,10 +143,14 @@ includedirs({
 	"vendor/spdlog/include",
 	"vendor/glfw/include",
 	"vendor/Glad/include",
+	"vendor/imgui/include",
 })
 
 -- Link against the Engine (DLL/SO dependency)
-links({ "KoroEngine" })
+links({
+	"KoroEngine",
+	table.unpack(KoroDependencies),
+})
 
 filter("system:windows")
 system("windows")
@@ -141,28 +160,17 @@ filter("system:linux")
 system("linux")
 defines({ "KORO_PLATFORM_LINUX" })
 -- Ensure the executable looks for KoroEngine.so in its own directory
-linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
+-- linkoptions({ "-Wl,-rpath,'$ORIGIN'" })
 -- Linux .so require static dependencies (GLFW/Glad) to be built with -fPIC
 -- Force Position Independent Code for dynamic linking
 pic("On")
+links(table.unpack(LinuxSystemLibraries))
 
 filter("system:macosx")
 system("macosx")
 defines({ "KORO_PLATFORM_MACOS" })
 -- Look for dylibs relative to executable path
-linkoptions({ "-Wl,-rpath,@loader_path" })
-
-filter("configurations:debug")
-defines({ "KORO_DEBUG" }) -- Note the single quotes wrapping the double quotes!
-symbols("On")
-
-filter("configurations:release")
-defines({ "KORO_RELEASE" })
-optimize("On")
-
-filter("configurations:dist")
-defines({ "KORO_DIST" })
-optimize("Full")
+-- linkoptions({ "-Wl,-rpath,@loader_path" })
 
 filter({ "system:macosx" })
 buildoptions({
@@ -177,5 +185,3 @@ buildoptions({
 	"-Wextra",
 	"-Wpedantic",
 })
-
-filter({})

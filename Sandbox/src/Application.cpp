@@ -7,13 +7,13 @@ public:
 	: Layer("examplelayer") {}
 
 	void OnUpdate() override
-{
+	{
 		// KORO_INFO("exLayer::Update");
 	}
 
 	void OnEvent(Koro::Event& e) override
-{
-		// KORO_TRACE("{0}", e);
+	{
+		KORO_TRACE("{0}", e);
 	}
 };
 
