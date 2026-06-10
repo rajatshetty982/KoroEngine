@@ -83,30 +83,6 @@ bin/Debug-linux-x86_64/Sandbox/Sandbox
 
 ---
 
-## 4. Runtime Linking
-
-The engine is built as a **shared library** and loaded by the Sandbox application.
-
-### Linux
-
-Uses:
-
-```bash
--Wl,-rpath,'$ORIGIN'
-```
-
-Ensures `KoroEngine.so` is resolved relative to the executable.
-
-### macOS
-
-Uses:
-
-```bash
--Wl,-rpath,@loader_path
-```
-
----
-
 ## 5. Wayland Bootstrap (Linux)
 
 `GenerateProject.py` includes a bootstrap step:
@@ -205,15 +181,6 @@ No manual setup required.
 
 ## 9. Common Issues
 
-### Missing Shared Library
-
-If `KoroEngine.so` is not found:
-
-* Verify post-build copy step executed
-* Check output directory structure
-* Ensure `rpath` flags are applied correctly
-
----
 
 ### LSP Errors / Missing Includes
 
