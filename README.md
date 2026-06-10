@@ -105,4 +105,4 @@ This enables proper IntelliSense for:
 - Build systems (Premake, Make, MSBuild, etc.)
 - Low-level systems design
 
-Expect frequent changes, inconsistencies, and rewrites as understanding improves.
+Expect frequent changes, inconsistencies, and rewrites as my understanding improves.
