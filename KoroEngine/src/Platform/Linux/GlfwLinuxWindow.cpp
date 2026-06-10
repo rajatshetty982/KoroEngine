@@ -1,5 +1,6 @@
 #include "GlfwLinuxWindow.h"
 
+#include "KoroEngine/Core/Platform.h"
 #include "koropch.h"
 
 #include "KoroEngine/Core/Log.h"
@@ -7,6 +8,7 @@
 #include "KoroEngine/Events/MouseEvent.h"
 #include "KoroEngine/Events/ApplicationEvent.h"
 
+#include <cassert>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -36,16 +38,19 @@ void LinuxWindow::Init(const WindowData& data)
 
 	if (!s_GLFWInitialised)
 	{
-		glfwSetErrorCallback(GLFWErrorCallback);
 		int initialised = glfwInit();
 		KORO_ENG_ASSERT(initialised, "Failed to initialise GLFW!");
+		glfwSetErrorCallback(GLFWErrorCallback);
 		s_GLFWInitialised = true;
 	}
+
 
 	m_Window = glfwCreateWindow((int)data.Width, (int)data.Height, data.Title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, &m_Data);
 	SetVSync(true);
+	int success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	KORO_ENG_ASSERT(success, "Failed to initialize Glad!");
 
 	// set glfw callbacks
 	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* win)
