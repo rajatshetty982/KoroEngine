@@ -10,11 +10,11 @@ enum class EventType
 	// app events
 	WindowFocus, WindowLostFocus, WindowResize, WindowClose,
 
-	// other ap side events
+	// other app side events
 	ATick, AUpdate, ARender,
 
 	// keyboard events
-	KeyPress, KeyRelease,
+	KeyPress, KeyRelease, KeyType
 };
 
 enum EventCategory

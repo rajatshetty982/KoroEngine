@@ -56,4 +56,5 @@
     #define KORO_ASSERT(x, ...)
 #endif
 
+#define KORO_EVENT_FN_BIND(x) std::bind(x, this, std::placeholders::_1)
 

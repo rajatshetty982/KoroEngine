@@ -85,7 +85,7 @@ includedirs({
 	"vendor/spdlog/include",
 	"vendor/glfw/include",
 	"vendor/Glad/include",
-	"vendor/imgui/include",
+	"vendor/imgui/",
 })
 
 defines({

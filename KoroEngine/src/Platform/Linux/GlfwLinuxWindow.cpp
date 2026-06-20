@@ -1,14 +1,13 @@
 #include "GlfwLinuxWindow.h"
 
-#include "KoroEngine/Core/Platform.h"
 #include "koropch.h"
 
 #include "KoroEngine/Core/Log.h"
+#include "KoroEngine/Core/Platform.h"
 #include "KoroEngine/Events/KeyEvent.h"
 #include "KoroEngine/Events/MouseEvent.h"
 #include "KoroEngine/Events/ApplicationEvent.h"
 
-#include <cassert>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -31,6 +30,7 @@ LinuxWindow::LinuxWindow(const WindowData& data)
 
 void LinuxWindow::Init(const WindowData& data)
 {
+
 	m_Data.Title = data.Title;
 	m_Data.Width = data.Width;
 	m_Data.Height = data.Height;
@@ -46,6 +46,7 @@ void LinuxWindow::Init(const WindowData& data)
 
 
 	m_Window = glfwCreateWindow((int)data.Width, (int)data.Height, data.Title.c_str(), nullptr, nullptr);
+
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, &m_Data);
 	SetVSync(true);
@@ -53,82 +54,82 @@ void LinuxWindow::Init(const WindowData& data)
 	KORO_ENG_ASSERT(success, "Failed to initialize Glad!");
 
 	// set glfw callbacks
-	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* win)
-							{
-							LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-							WindowCloseEvent ev;
-							winData.EventCallback(ev);
-							});
+	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* win){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		WindowCloseEvent ev;
+		winData.EventCallback(ev);
+	});
 
-	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* win, int width, int height)
-						   {
-						   LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-						   winData.Height = height;
-						   winData.Width = width;
-						   WindowResizeEvent event(width, height);
-						   winData.EventCallback(event);
-						   });
+	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* win, int width, int height){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		winData.Height = height;
+		winData.Width = width;
+		WindowResizeEvent event(width, height);
+		winData.EventCallback(event);
+	});
 
-	glfwSetKeyCallback(m_Window, [](GLFWwindow* win,int key, int scancode, int action, int mods)
-					{
-					LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-					switch(action)
-					{
-					// *  @param[in] action `GLFW_PRESS`, `GLFW_RELEASE` or `GLFW_REPEAT`.  Future
-					case GLFW_PRESS:
-					{
+	glfwSetKeyCallback(m_Window, [](GLFWwindow* win,int key, int scancode, int action, int mods){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		switch(action)
+		{
+			// *  @param[in] action `GLFW_PRESS`, `GLFW_RELEASE` or `GLFW_REPEAT`.  Future
+			case GLFW_PRESS:
+				{
 					KeyPressEvent ev(key,0);
 					winData.EventCallback(ev);
 					break;
-					}
-					case GLFW_RELEASE:
-					{
+				}
+			case GLFW_RELEASE:
+				{
 					KeyReleaseEvent ev(key);
 					winData.EventCallback(ev);
 					break;
-					}
-					case GLFW_REPEAT:
-					{
+				}
+			case GLFW_REPEAT:
+				{
 					KeyPressEvent ev(key,1);
 					winData.EventCallback(ev);
 					break;
-					}
-					}
-					});
+				}
+		}
+	});
 
-	glfwSetMouseButtonCallback( m_Window,  [](GLFWwindow* win, int button, int action, int mods)
-							{
-							LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-							switch (action)
-							{
+	glfwSetCharCallback(m_Window, [](GLFWwindow* win, unsigned int codepoint){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		KeyTypeEvent ev(codepoint);
+		winData.EventCallback(ev);
+	});
 
-							case GLFW_PRESS:
-							{
-							MouseButtonPressEvent ev(button);
+	glfwSetMouseButtonCallback( m_Window,  [](GLFWwindow* win, int button, int action, int mods){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		switch (action)
+		{
 
-							winData.EventCallback(ev);
-							break;
-							}
-							case GLFW_RELEASE:
-							MouseButtonReleaseEvent ev(button);
-							winData.EventCallback(ev);
-							}
-							});
+			case GLFW_PRESS:
+				{
+					MouseButtonPressEvent ev(button);
 
-	glfwSetScrollCallback(m_Window, [](GLFWwindow* win, double xoffset, double yoffset)
-					   {
-					   LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-					   MouseScrollEvent ev(xoffset, yoffset);
-					   winData.EventCallback(ev);
-					   });
+					winData.EventCallback(ev);
+					break;
+				}
+			case GLFW_RELEASE:
+				MouseButtonReleaseEvent ev(button);
+				winData.EventCallback(ev);
+		}
+	});
 
-	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* win, double xpos, double ypos)
-						  {
+	glfwSetScrollCallback(m_Window, [](GLFWwindow* win, double xoffset, double yoffset){
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		MouseScrollEvent ev(xoffset, yoffset);
+		winData.EventCallback(ev);
+	});
 
-						  LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
-						  MouseMoveEvent ev(xpos, ypos);
-						  winData.EventCallback(ev);
-						  });
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* win, double xpos, double ypos){
+
+		LinuxWindowData& winData = *(LinuxWindowData*) glfwGetWindowUserPointer(win);
+		MouseMoveEvent ev(xpos, ypos);
+		winData.EventCallback(ev);
+	});
 }
 
 void LinuxWindow::OnUpdate()
@@ -160,7 +161,7 @@ LinuxWindow::~LinuxWindow()
 
 void LinuxWindow::Shutdown()
 {
-	glfwShowWindow(m_Window);
+	// glfwShowWindow(m_Window);
 }
 
 }

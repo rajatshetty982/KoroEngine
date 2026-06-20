@@ -73,15 +73,12 @@ class KORO_API MouseButtonPressEvent : public MouseButtonEvent
 public:
 	MouseButtonPressEvent(int button) : MouseButtonEvent(button) {}
 	EVENT_CLASS_TYPE(MouseButtonPress)
-
-
 	std::string ToString() const override
 	{
 		std::stringstream ss;
 		ss << "MouseButtonPressEvent: " << m_Button;
 		return ss.str();
 	}
-
 };
 
 

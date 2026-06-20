@@ -11,11 +11,16 @@
 
 namespace Koro {
 
+Application* Application::s_Instance = nullptr;
+
 Application::Application() 
 	: m_Window(IWindow::Make())
 	, m_ProcessBuffer(std::make_shared<EventBuffer>())
 	, m_ReceiveBuffer(std::make_shared<EventBuffer>())
 {
+	KORO_ASSERT(!s_Intance, "Application already exists!");
+	s_Instance = this;
+
 	m_Window->SetEventCallback([this](Event& event) {
 		this->OnEvent(event);
 	});
@@ -37,16 +42,16 @@ void Application::Run()
 	long  num = 0;
 
 	glClearColor(0.2,0.1,1,0);
-	glClear(GL_COLOR_BUFFER_BIT);
 
 	while (m_Running)
 	{
-		std::swap(m_ReceiveBuffer, m_ProcessBuffer);
+		glClear(GL_COLOR_BUFFER_BIT);
 
+		std::swap(m_ReceiveBuffer, m_ProcessBuffer);
 		ProcessBuffer(*m_ProcessBuffer, [this](Event& e)
-					  {
-					  this->UpdateEventPipeline(e);
-					  });
+				{
+				this->UpdateEventPipeline(e);
+				});
 
 
 		m_ProcessBuffer->Clear();
@@ -89,12 +94,14 @@ void Application::UpdateEventPipeline(Event& e)
 }
 
 void Application::PushLayer(Layer* layer)
-	{
+{
 	m_LayerStack.PushLayer(layer);
+	layer->OnAttach();
 }
 
 void Application::PushOverlay(Layer* overlay)
-	{
+{
 	m_LayerStack.PushOverlay(overlay);
+	overlay->OnAttach();
 }
 } // Koro

@@ -1,3 +1,5 @@
+#include "KoroEngine/Core/Log.h"
+#include "KoroEngine/ImGui/ImGuiLayer.h"
 #include <KoroEngine.h>
 
 class ExampleLayer : public Koro::Layer
@@ -20,8 +22,10 @@ public:
 class Sandbox : public Koro::Application
 {
 public:
-	Sandbox(){
+	Sandbox()
+	{
 		PushLayer(new ExampleLayer());
+		PushOverlay(new Koro::ImGuiLayer);
 	}
 	~Sandbox(){}
 };

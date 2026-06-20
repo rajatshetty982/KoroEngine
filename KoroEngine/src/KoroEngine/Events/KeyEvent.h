@@ -29,6 +29,7 @@ public:
 	, m_RepeatCount(repeatCount) {}
 
 	inline int GetRepeatCount() { return m_RepeatCount; }
+	inline bool IsRepeat() { return m_RepeatCount > 0; }
 
 	std::string ToString()
 	{
@@ -40,7 +41,7 @@ public:
 	EVENT_CLASS_TYPE(KeyPress)
 
 private:
-	int m_RepeatCount;
+	int m_RepeatCount = 0;
 };
 
 class KORO_API KeyReleaseEvent : public KeyEvent
@@ -59,4 +60,22 @@ public:
 	EVENT_CLASS_TYPE(KeyRelease)
 
 };
+
+class KORO_API KeyTypeEvent : public KeyEvent
+{
+public:
+	KeyTypeEvent(int keycode)
+	: KeyEvent(keycode) {}
+
+	std::string ToString()
+	{
+		std::stringstream ss;
+		ss << "KeyTypeEvent: " << m_KeyCode;
+		return ss.str();
+	}
+
+	EVENT_CLASS_TYPE(KeyType)
+
+};
+
 } // Koro

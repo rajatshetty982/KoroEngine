@@ -24,6 +24,8 @@ public:
 	void PushLayer(Layer* layer);
 	void PushOverlay(Layer* overlay);
 
+	inline static Application& Get() { return *s_Instance; }
+	inline IWindow& GetWindow() { return *m_Window; }
 private:
 	bool OnWindowClose(WindowCloseEvent& e);
 
@@ -34,6 +36,9 @@ private:
 	std::shared_ptr<EventBuffer> m_ProcessBuffer;
 
 	LayerStack m_LayerStack;
+
+private:
+	static Application* s_Instance;
 }; // Application
 
 Application* CreateApplication();
