@@ -1,18 +1,5 @@
 #pragma once
 
-// ------------------ helpers --------------
-#if defined(KORO_DEBUG)
-    #define KORO_BUILD_CONFIG "debug"
-	#define KORO_ASSERTS_ENABLED
-#elif defined(KORO_RELEASE)
-    #define KORO_BUILD_CONFIG "release"
-#elif defined(KORO_DIST)
-    #define KORO_BUILD_CONFIG "dist"
-#else
-    #define KORO_BUILD_CONFIG "Unknown"
-#endif
-// --------------- helpers end --------------
-
 // Platform Detection and API Export/Import
 #if KORO_DYNAMIC_LINK
 #ifdef KORO_PLATFORM_WINDOWS
@@ -33,7 +20,6 @@
 #endif
 
 // Debug Break Logic
-
 #if defined(KORO_PLATFORM_WINDOWS)
     #define KORO_DEBUGBREAK() __debugbreak()
 #elif defined(KORO_PLATFORM_LINUX) || defined(KORO_PLATFORM_MACOS)
@@ -45,6 +31,17 @@
     #endif
 #else
     #define KORO_DEBUGBREAK()
+#endif
+
+#if defined(KORO_DEBUG)
+    #define KORO_BUILD_CONFIG "debug"
+	#define KORO_ASSERTS_ENABLED
+#elif defined(KORO_RELEASE)
+    #define KORO_BUILD_CONFIG "release"
+#elif defined(KORO_DIST)
+    #define KORO_BUILD_CONFIG "dist"
+#else
+    #define KORO_BUILD_CONFIG "Unknown"
 #endif
 
 // Assertions

@@ -25,20 +25,7 @@ LinuxSystemLibraries = {
 	"dl",
 }
 
-filter("configurations:Debug")
-defines({ "KORO_DEBUG" })
-runtime("Debug")
-symbols("On")
-
-filter("configurations:Release")
-defines({ "KORO_RELEASE" })
-runtime("Release")
-optimize("On")
-
-filter("configurations:Dist")
-defines({ "KORO_DIST" })
-runtime("Release")
-optimize("Full")
+-- #NOTE: copied from here, the filters for build
 
 filter({ "system:macosx" })
 buildoptions({
@@ -91,6 +78,23 @@ includedirs({
 defines({
 	"GLFW_INCLUDE_NONE",
 })
+
+--
+filter("configurations:Debug")
+defines({ "KORO_DEBUG" })
+runtime("Debug")
+symbols("On")
+
+filter("configurations:Release")
+defines({ "KORO_RELEASE" })
+runtime("Release")
+optimize("On")
+
+filter("configurations:Dist")
+defines({ "KORO_DIST" })
+runtime("Release")
+optimize("Full")
+--
 
 -- Engine Dependencies
 links(KoroDependencies)
@@ -151,6 +155,23 @@ links({
 	"KoroEngine",
 	table.unpack(KoroDependencies),
 })
+
+--
+filter("configurations:Debug")
+defines({ "KORO_DEBUG" })
+runtime("Debug")
+symbols("On")
+
+filter("configurations:Release")
+defines({ "KORO_RELEASE" })
+runtime("Release")
+optimize("On")
+
+filter("configurations:Dist")
+defines({ "KORO_DIST" })
+runtime("Release")
+optimize("Full")
+--
 
 filter("system:windows")
 system("windows")

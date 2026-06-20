@@ -1,13 +1,14 @@
 #include "Application.h"
 
-#include "KoroEngine/Core/Platform.h"
+#include <GL/gl.h>
+
+#include "Platform.h"
 #include "Window.h"
-#include "KoroEngine/Events/ApplicationEvent.h"
 #include "Log.h"
+#include "KoroEngine/Events/ApplicationEvent.h"
 #include "KoroEngine/Events/Event.h"
 #include "KoroEngine/Events/EventBuffer.h"
 
-#include <GL/gl.h>
 
 namespace Koro {
 
@@ -18,16 +19,12 @@ Application::Application()
 	, m_ProcessBuffer(std::make_shared<EventBuffer>())
 	, m_ReceiveBuffer(std::make_shared<EventBuffer>())
 {
-	KORO_ASSERT(!s_Intance, "Application already exists!");
+	KORO_ASSERT(!s_Instance, "Application already exists!");
 	s_Instance = this;
 
 	m_Window->SetEventCallback([this](Event& event) {
 		this->OnEvent(event);
 	});
-
-	KORO_ENG_INFO("Build type: {0}", KORO_BUILD_CONFIG);
-	bool x = false;
-	KORO_ENG_ASSERT(x, "Assert is enabled");
 }
 
 Application::~Application()

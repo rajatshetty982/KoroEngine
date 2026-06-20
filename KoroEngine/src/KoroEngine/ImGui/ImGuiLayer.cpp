@@ -1,11 +1,10 @@
 #include "ImGuiLayer.h"
-#include "GLFW/glfw3.h"
-#include "KoroEngine/Events/KeyEvent.h"
-#include "KoroEngine/Events/MouseEvent.h"
 #include "koropch.h"
 
 #include "KoroEngine/Core/Log.h"
 #include "KoroEngine/Core/Application.h"
+#include "KoroEngine/Events/KeyEvent.h"
+#include "KoroEngine/Events/MouseEvent.h"
 
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
@@ -77,7 +76,6 @@ void ImGuiLayer::OnUpdate()
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 }
 
 void ImGuiLayer::OnEvent(Event& e)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KoroEngine/Core/Log.h"
+#include "KoroEngine/Core/Platform.h"
 #ifdef KORO_PLATFORM_LINUX
 
 // extern Koro::Application* Koro::CreateApplication();
@@ -12,7 +13,7 @@ int main(int argc, char** argv)
 	KORO_ENG_INFO("Initialised engine! info");
 	KORO_INFO("Initialised client app!");
 	KORO_INFO("Build: "); // FIX: Add which build
-
+	KORO_ENG_INFO("Build type: {0}", KORO_BUILD_CONFIG);
 
 	auto app = Koro::CreateApplication();
 	app->Run();
