@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Window.h"
 #include "Log.h"
+#include "Input.h"
 #include "KoroEngine/Events/ApplicationEvent.h"
 #include "KoroEngine/Events/Event.h"
 #include "KoroEngine/Events/EventBuffer.h"
@@ -59,6 +60,9 @@ void Application::Run()
 		}
 
 		m_Window->OnUpdate(); 
+
+		auto [x, y] = Input::GetMousePos();
+		KORO_ENG_TRACE("{0}, {1}", x, y); 
 	}
 	return;
 }
