@@ -1,6 +1,8 @@
+#include "KoroEngine/Core/Input.h"
+#include "KoroEngine/Core/KeyCodes.h"
 #include "KoroEngine/Core/Log.h"
 #include "KoroEngine/ImGui/ImGuiLayer.h"
-#include <KoroEngine.h>
+#include "KoroEngine.h"
 
 class ExampleLayer : public Koro::Layer
 {
@@ -10,12 +12,13 @@ public:
 
 	void OnUpdate() override
 	{
-		// KORO_INFO("exLayer::Update");
+		// if (Koro::Input::IsKeyPressed(KORO_KEY_W))
+		// 	KORO_INFO("KEY PRESSED: {0}",KORO_KEY_W);
 	}
 
 	void OnEvent(Koro::Event& e) override
 	{
-		KORO_TRACE("{0}", e);
+		// KORO_TRACE("{0}", e);
 	}
 };
 

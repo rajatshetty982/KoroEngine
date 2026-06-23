@@ -8,6 +8,8 @@
 #include "KoroEngine/Events/Event.h"
 #include "KoroEngine/ImGui/ImGuiLayer.h"
 
+#include "KoroEngine/Core/Input.h"
+#include "KoroEngine/Core/InputCodes.h"
 
 //------ Engine Entry point for client -------------
 //--------------------------------------------------

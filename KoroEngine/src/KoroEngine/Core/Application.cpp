@@ -61,15 +61,14 @@ void Application::Run()
 
 		m_Window->OnUpdate(); 
 
-		auto [x, y] = Input::GetMousePos();
-		KORO_ENG_TRACE("{0}, {1}", x, y); 
+		// auto [x, y] = Input::GetMousePos();
+		// KORO_ENG_TRACE("{0}, {1}", x, y); 
 	}
 	return;
 }
 
 void Application::OnEvent(Event& e)
 {
-	// KORO_ENG_TRACE("{0}", e);
 	e.PushToBuffer(*m_ReceiveBuffer);
 	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 	{
