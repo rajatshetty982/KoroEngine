@@ -18,14 +18,13 @@ KoroDependencies = {
 	"Glad",
 	"imgui",
 }
+
 LinuxSystemLibraries = {
 	"GL",
 	"X11",
 	"pthread",
 	"dl",
 }
-
--- #NOTE: copied from here, the filters for build
 
 filter({ "system:macosx" })
 buildoptions({
@@ -44,10 +43,9 @@ buildoptions({
 filter({})
 
 -------------------------------------------------------------------------------
--- PROJECT: KoroEngine (Core Shared Library)
+-- PROJECT: KoroEngine (Core Static Library)
 -------------------------------------------------------------------------------
-------
----
+
 project("KoroEngine")
 location("KoroEngine")
 kind("StaticLib")
@@ -73,6 +71,7 @@ includedirs({
 	"vendor/glfw/include",
 	"vendor/Glad/include",
 	"vendor/imgui/",
+	"vendor/glm/",
 })
 
 defines({
@@ -117,7 +116,9 @@ filter("system:macosx")
 system("macosx")
 defines({ "KORO_PLATFORM_MACOS" })
 
--- -- for easy execution in dev NOTE: Not needed as we seitched from shared object to static
+-- Not needed as we switched from shared object to static
+--
+-- -- for easy execution in dev
 -- filter("configurations:not Dist")
 -- postbuildcommands({
 -- 	"{MKDIR} ../bin/" .. outputdir .. "/Sandbox/",
@@ -148,6 +149,7 @@ includedirs({
 	"vendor/glfw/include",
 	"vendor/Glad/include",
 	"vendor/imgui/include",
+	"vendor/glm/",
 })
 
 -- Link against the Engine (DLL/SO dependency)
