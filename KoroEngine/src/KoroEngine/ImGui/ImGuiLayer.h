@@ -16,25 +16,31 @@ public:
 	ImGuiLayer();
 	~ImGuiLayer();
 
-	void OnUpdate();
-	void OnEvent(Event&);
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+	virtual void OnImGuiRender() override;
 
-	virtual void OnAttach();
-	virtual void OnDetach();
+	void Begin();
+	void End();
 
-private:
-	bool OnKeyPressedEvent(KeyPressEvent& e);
-	bool OnKeyReleaseEvent(KeyReleaseEvent& e);
-	bool OnMouseButtonPressEvent(MouseButtonPressEvent& e);
-	bool OnMouseButtonReleaseEvent(MouseButtonReleaseEvent& e);
-	bool OnMouseScrollEvent(MouseScrollEvent& e);
-	bool OnMouseMoveEvent(MouseMoveEvent& e);
-	bool OnWindowResizeEvent(WindowResizeEvent& e);
-	bool OnKeyTypedEvent(KeyTypeEvent& e);
-	bool OnMouseScrolledEvent(MouseScrollEvent& e);
 private:
 	float m_Time = 0.0f;
 	GLFWwindow* m_WindowHandle = nullptr;
+
+
+
+// 	void OnEvent(Event&);
+//
+// private:
+// 	bool OnKeyPressedEvent(KeyPressEvent& e);
+// 	bool OnKeyReleaseEvent(KeyReleaseEvent& e);
+// 	bool OnMouseButtonPressEvent(MouseButtonPressEvent& e);
+// 	bool OnMouseButtonReleaseEvent(MouseButtonReleaseEvent& e);
+// 	bool OnMouseScrollEvent(MouseScrollEvent& e);
+// 	bool OnMouseMoveEvent(MouseMoveEvent& e);
+// 	bool OnWindowResizeEvent(WindowResizeEvent& e);
+// 	bool OnKeyTypedEvent(KeyTypeEvent& e);
+// 	bool OnMouseScrolledEvent(MouseScrollEvent& e);
 };
 
 }

@@ -1,7 +1,3 @@
-#include "KoroEngine/Core/Input.h"
-#include "KoroEngine/Core/InputCodes.h"
-#include "KoroEngine/Core/Log.h"
-#include "KoroEngine/ImGui/ImGuiLayer.h"
 #include "KoroEngine.h"
 
 ///
@@ -28,7 +24,7 @@ class ExampleLayer : public Koro::Layer
 public:
 	ExampleLayer()
 	: Layer("examplelayer") {
-		auto cam = camera(5.0f, {2,3});
+		// auto cam = camera(5.0f, {2,3});
 	}
 
 	void OnUpdate() override
@@ -49,8 +45,8 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Koro::ImGuiLayer);
 	}
+
 	~Sandbox(){}
 };
 

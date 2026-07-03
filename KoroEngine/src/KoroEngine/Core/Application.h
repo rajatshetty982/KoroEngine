@@ -8,6 +8,7 @@
 #include "Layer.h"
 #include "KoroEngine/Events/EventBuffer.h"
 #include "KoroEngine/Events/ApplicationEvent.h"
+#include "KoroEngine/ImGui/ImGuiLayer.h"
 
 namespace Koro {
 
@@ -31,6 +32,7 @@ private:
 
 	bool m_Running = true;
 	std::unique_ptr<IWindow> m_Window;
+	ImGuiLayer* m_ImGuiLayer;
 
 	std::shared_ptr<EventBuffer> m_ReceiveBuffer;
 	std::shared_ptr<EventBuffer> m_ProcessBuffer;
